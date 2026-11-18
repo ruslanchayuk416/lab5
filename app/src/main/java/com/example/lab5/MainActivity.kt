@@ -1,47 +1,28 @@
 package com.example.lab5
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.lab5.ui.theme.Lab5Theme
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            Lab5Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
-    }
+fun calculateTip(amount: Double, percent: Double) = amount * percent / 100.0
+fun calculateDiscountPercent(dishes: Int) = when {
+    dishes in 1..2 -> 3
+    dishes in 3..5 -> 5
+    dishes in 6..10 -> 7
+    dishes > 10 -> 10
+    else -> 0
 }
+fun calculateDiscount(amount: Double, percent: Int) = amount * percent / 100.0
+fun calculateTotal(amount: Double, tipPercent: Double, discountPercent: Int) =
+    amount + calculateTip(amount, tipPercent) - calculateDiscount(amount, discountPercent)
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Lab5Theme {
-        Greeting("Android")
-    }
-}
