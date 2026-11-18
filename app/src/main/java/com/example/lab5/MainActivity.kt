@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -105,3 +109,16 @@ fun TipCalculatorScreen() {
             modifier = Modifier.fillMaxWidth()
         )
 
+        Button(onClick = { showTotal = !showTotal }, modifier = Modifier.fillMaxWidth()) {
+            Text("Итого")
+        }
+
+        SnackbarHost(snackbarHostState)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun Preview() {
+    MaterialTheme { TipCalculatorScreen() }
+}
