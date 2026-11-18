@@ -1,4 +1,4 @@
-package com.example.laba4
+package com.example.lab5
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
-// КОММИТ 1: все расчёты — отдельные функции (п.4)
 fun calculateTip(amount: Double, percent: Double) = amount * percent / 100.0
 fun calculateDiscountPercent(dishes: Int) = when {
     dishes in 1..2 -> 3
@@ -34,7 +33,6 @@ fun calculateDiscount(amount: Double, percent: Int) = amount * percent / 100.0
 fun calculateTotal(amount: Double, tipPercent: Double, discountPercent: Int) =
     amount + calculateTip(amount, tipPercent) - calculateDiscount(amount, discountPercent)
 
-// КОММИТ 2: экран
 @Composable
 fun TipCalculatorScreen() {
     var amountInput by remember { mutableStateOf("") }
@@ -56,7 +54,6 @@ fun TipCalculatorScreen() {
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // п.3: 2 текстовых поля, подписи — простые Text
         Text("Сумма заказа")
         OutlinedTextField(
             value = amountInput, onValueChange = { amountInput = it },
