@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Slider
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +21,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 fun calculateTip(amount: Double, percent: Double) = amount * percent / 100.0
 fun calculateDiscountPercent(dishes: Int) = when {
@@ -65,6 +68,21 @@ fun TipCalculatorScreen() {
         OutlinedTextField(
             value = dishesInput, onValueChange = { dishesInput = it },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Text("Чаевые: ${tipPercent.toInt()}%")
+        Slider(
+            value = tipPercent,
+            onValueChange = { tipPercent = (it / 5f).roundToInt() * 5f },
+            onValueChangeFinished = {
+                scope.launch {
+                    snackbarHostState.showSnackbar(
+                        "Чаевые: %.2f".format(calculateTip(amount, tipPercent.toDouble()))
+                    )
+                }
+            },
+            valueRange = 0f..25f, steps = 4,
             modifier = Modifier.fillMaxWidth()
         )
 
